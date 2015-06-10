@@ -9,6 +9,8 @@
         <script src="vendor/angular-route-segment.min.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/PeliculasCtrl.js"></script>
+        <script src="scripts/controllers/SeriesCtrl.js"></script>
+        <script src="scripts/controllers/NavegacionCtrl.js"></script>
     </head>
     <body>
         <div class="container">
@@ -16,11 +18,20 @@
                 <h1>IMDB Cutre</h1>
                 <h3>Mi superaplicación de peliculas y series</h3>
             </header>
-            <ul class="nav nav-tabs">
-                <!-- necesitamos el #/ para enrutar con Angular -->
-                <li role="presentation" class="active"><a href="#/peliculas">Películas</a></li>
-                <li role="presentation"><a href="#/series">Series</a></li>
-            </ul>
+
+            <!-- Decimos a Angular que todo este nav le corresponde el código del controlador NavegacionCtrl, que
+             es el que le dota de funcionalidad y carga la vista -->
+            <nav ng-controller="NavegacionCtrl">
+                <ul class="nav nav-tabs">
+                    <!-- necesitamos el #/ para enrutar con Angular -->
+                    <li role="presentation" ng-class="{'active': rutaEsPeliculas()}">
+                        <a href="#/peliculas">Películas</a>
+                    </li>
+                    <li role="presentation" ng-class="{'active': rutaEsSeries()}">
+                        <a href="#/series">Series</a>
+                    </li>
+                </ul>
+            </nav>
 
             <!-- Definimos la zona donde se cargará la vista dinámica -->
             <section app-view-segment="0"></section>
