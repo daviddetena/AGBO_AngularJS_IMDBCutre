@@ -5,5 +5,15 @@
 angular
     .module("imdbcutre")
     .controller("PeliculasCtrl",["$scope",function($scope){
-        //
+
+        // Colgamos en $scope para que la vista lo tenga disponible
+        $scope.elementos = [{
+            nombre: "The Matrix"
+        },
+        {
+            nombre: "The Matrix Mala"
+        },
+        {
+            nombre: "The Matrix Mala 2"
+        }];
     }]);
