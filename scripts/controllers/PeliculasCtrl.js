@@ -1,32 +1,23 @@
 /**
  * Created by daviddetena on 10/06/15.
  */
-//en controller va el nombre del controlador. Todo controlador recibe un $scope
+//en controller va el nombre del controlador. Todos los controladores recibe un $scope
 angular
-    .module("imdbcutre")
-    .controller("PeliculasCtrl",["$scope","$http",function($scope,$http){
+.module("imdbcutre")
+    .controller("PeliculasCtrl",["$scope","$http","ApiService",function($scope,$http,ApiService){
 
-        // URL API (siguientes peliculas de estreno)
-        var url = "https://api.themoviedb.org/3/movie/upcoming";
-
-        // API key
-        url+= "?api_key=826b523c417cbb888744b13031d846c2";
-
-        // Idioma info
-        url+= "&language=es";
-
-        // Solicitamos un servicio a la API rest
-        $http
-            .get(url)
+        // Obtenemos datos del servicio que hemos creado ApiService
+        // El get del promise ya lo cargamos con el ApiService, pero el then lo necesitamos
+        ApiService
+            .obtenerDatos("movie/upcoming")
             .then(
-                // La cosa ha ido bien
-                function(datos){
-                    $scope.peliculas = datos.data.results;
-                    //debugger;
-                },
-                // Algo ha ido a mal
-                function(){
-                    alert("Algo ha ido mal");
-                });
-
+            // La cosa ha ido bien
+            function(datos){
+                $scope.peliculas = datos.data.results;
+                //debugger;
+            },
+            // Algo ha ido a mal
+            function(){
+                alert("Algo ha ido mal");
+            });
     }]);
