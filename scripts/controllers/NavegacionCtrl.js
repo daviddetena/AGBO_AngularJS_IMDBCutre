@@ -1,7 +1,7 @@
 /**
  * Created by daviddetena on 10/06/15.
  */
-// en controller va el nombre del controlador. Todo controlador recibe un $scope
+// en controller va el nombre del controlador. Cualquier controlador recibe un $scope
 // nombre controlador: NavegacionCtrl
 angular
     .module("imdbcutre")
