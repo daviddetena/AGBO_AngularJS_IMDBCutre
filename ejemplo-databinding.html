@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="test">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+        <script src="vendor/angular.min.js"></script>
+    </head>
+    <body>
+        <!-- Ejemplo de two-way binding -->
+        <div>
+            <input type="text" ng-model="valor1"/>
+            <span>Este es mi valor1: {{valor1}}</span>
+        </div>
+
+        <!-- Ejemplo de one-way binding -->
+        <div>
+            <input type="text" ng-model="valor2" />
+            <span>Este es mi valor2: {{::valor2}}</span>
+        </div>
+
+        <!-- Ejemplo de ngModelOptions: updateOn -->
+        <div>
+            <input type="text" ng-model="valor3" ng-model-options="{updateOn:'blur'}" />
+            <span>Este es mi valor 3: {{valor3}}</span>
+        </div>
+
+        <!-- Ejemplo de ngModelOptions: debounce (delay) -->
+        <div>
+            <input type="text" ng-model="valor4" ng-model-options="{debounce: 2000}" />
+            <span>Este es mi valor 4: {{valor4}}</span>
+        </div>
+
+
+        <script>
+            angular.module("test",[]);
+        </script>
+    </body>
+</html>
