@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- Definimos ruta Angular a nuestro módulo -->
+<html ng-app="test">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+        <script src="vendor/angular.min.js"></script>
+    </head>
+    <body>
+        <!-- controlador padre -->
+        <div ng-controller="ControladorA">
+            <button ng-click="lanzarEventoHaciaAbajo()">Lanzar hacia abajo</button>
+
+            <!-- Controlador hijo -->
+            <div ng-controller="ControladorB">
+                <button ng-click="lanzarEventoHaciaArriba()">Lanzar hacia arriba</button>
+            </div>
+
+        </div>
+
+        <!-- Controlador para ejemplo de watch -->
+        <div ng-controller="ControladorC">
+            <input type="text" ng-model="valor" />
+        </div>
+
+
+        <script>
+            angular.module("test", []);
+
+            // Controlador padre manda mensaje a hijo con 'broadcast'
+            angular.module("test").controller("ControladorA", function( $scope ) {
+
+                // Definimos evento
+                $scope.lanzarEventoHaciaAbajo = function() {
+                    // Con $broadcast lanzamos un evento hacia abajo en la jerarquía de scopes.
+                    $scope.$broadcast("EventoHaciaAbajo", "Soy papi! Hola controlador hijo!!");
+                };
+
+
+                // Con $on nos suscribimos al evento del hijo 'EventoHaciaArriba'
+                $scope.$on("EventoHaciaArriba", function(evento, datos) {
+                    alert(datos);
+                });
+            });
+
+            // Controlador hijo manda mensaje a padre con 'emit'
+            angular.module("test").controller("ControladorB", function( $scope ) {
+
+                // Con $on nos suscribimos al evento del padre 'EventoHaciaAbajo'
+                $scope.$on("EventoHaciaAbajo", function(evento, datos) {
+                    alert(datos);
+                });
+
+                // Definimos evento que será enviado al padre
+                $scope.lanzarEventoHaciaArriba = function() {
+                    // Con $emit lanzamos un evento hacia arriba en la jerarquía de scopes.
+                    $scope.$emit("EventoHaciaArriba", "Hola papaito !!");
+                };
+            });
+
+
+            // Controlador para $watch
+            // Hay que tener en cuenta que así se estarían observando cambios bidireccionales:
+            // del modelo a la vista y de la vista al modelo, para mantenerlo sincronizado.
+            // Si hay muchos $watchs en la página puede ocasionar pérdidas de rendimiento
+            // Por tanto, si tenemos datos que no van a ser actualizados, como datos estáticos
+            // de tablas, por ejemplo, habría que poner {{::valor}} en caso de querer obtenerlo
+            angular.module("test").controller("ControladorC",function($scope){
+
+                // Observamos con $watch
+                $scope.$watch(
+                    // Lo que queremos observar. Definido en el ng-model arriba del ControladorC
+                    function(){
+                        return $scope.valor;
+                    },
+                    // Manejador que se dispara cuando hay cambios. Primero el valor antiguo y luego
+                    // el nuevo
+                    function(nuevoValor,antiguoValor){
+                        window.console.log("Valor antiguo: " + antiguoValor + "; nuevo valor: " + nuevoValor);
+                    }
+                );
+            });
+        </script>
+    </body>
+</html>
