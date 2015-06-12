@@ -1,10 +1,12 @@
 /**
  * Created by daviddetena on 10/06/15.
  */
-//en controller va el nombre del controlador. Todo controlador recibe un $scope
+// En controller va el nombre del controlador. Todos los controladores reciben un $scope
+// En películas aplicamos filtros en la vista. En las series, aplicamos filtro en el controlador.
+// Para ello, incluimos la dependencia $filter
 angular
     .module("imdbcutre")
-    .controller("SeriesCtrl",["$scope","$http","ApiService",function($scope,$http,ApiService){
+    .controller("SeriesCtrl",["$scope","ApiService","$filter",function($scope,ApiService,$filter){
 
         // El get del promise ya lo cargamos con el ApiService, pero el then lo necesitamos
         ApiService
@@ -12,7 +14,9 @@ angular
             .then(
             // La cosa ha ido bien
             function(datos){
-                $scope.series = datos.data.results;
+                // Aplicamos filtro a la colección devuelta => datos.data.results
+                // Como segundo parámetro del filtro indicamos que ordene por nombre
+                $scope.series = $filter("orderBy")(datos.data.results, "original_name");
                 //debugger;
             },
             // Algo ha ido a mal

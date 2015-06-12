@@ -4,9 +4,16 @@
     <!-- elementos es la variable que recibirá del controlador PeliculasCtrl.js, en este caso una colección.
     Pintamos las cosas del $scope del controlador con {{}}. Añadimos :: a las variables para que no tenga
     watch en ese caso, ya que es sólo para mostrarlo al usuario -->
-        <tr ng-repeat="pelicula in peliculas">
+
+        <!-- Ordenamos por fecha de lanzamiento (orderBy: con guion delante del campo para
+        orden descendente. Usar Array para ordenar por más de un campo.
+        Aplicamos filtro (formato) a la fecha, con parámetros indicados por :
+        Concateno filtros con |
+        La salida de un filtro es la entrada del siguiente filtro. Así, la salida
+        de date:'shortDate' es la entrada del filtro personalizado nuestro 'estreno' -->
+        <tr ng-repeat="pelicula in peliculas | orderBy:['release_date','original_title'] ">
             <td>{{ ::pelicula.original_title }}</td>
-            <td>{{ ::pelicula.release_date }}</td>
+            <td>{{ ::pelicula.release_date | date:'shortDate' | estreno }}</td>
             <td><span class="badge">{{ ::pelicula.vote_average }}</span></td>
         </tr>
     </tbody>
