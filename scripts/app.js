@@ -32,7 +32,16 @@ angular
                 // en vez de navegar y pedir los datos, que provoca un leve lag
                 Peliculas:["ApiService",function(ApiService){
                     return ApiService.obtenerDatos("movie/upcoming");
-                }]
+                }]/*
+                Paises: [],
+                Ciudades: []
+                */
+            },
+            resolveFailed:{
+                // Falla alguna de las promesas
+                // No se navega al controlador si hay algún fallo en el resolve, aunque sólo falle en una
+                // AngularJS no te dice en qué ha fallado
+                // Aquí se podría, por ejemplo, poner un controlador y una vista, a una página de error
             }
         });
 
