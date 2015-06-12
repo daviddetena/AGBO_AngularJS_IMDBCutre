@@ -6,21 +6,9 @@
 // Para ello, incluimos la dependencia $filter
 angular
     .module("imdbcutre")
-    .controller("SeriesCtrl",["$scope","ApiService","$filter",function($scope,ApiService,$filter){
+    .controller("SeriesCtrl",["$scope","Series","$filter",function($scope,Series,$filter){
 
-        // El get del promise ya lo cargamos con el ApiService, pero el then lo necesitamos
-        ApiService
-            .obtenerDatos("tv/airing_today")
-            .then(
-            // La cosa ha ido bien
-            function(datos){
-                // Aplicamos filtro a la colección devuelta => datos.data.results
-                // Como segundo parámetro del filtro indicamos que ordene por nombre
-                $scope.series = $filter("orderBy")(datos.data.results, "original_name");
-                //debugger;
-            },
-            // Algo ha ido a mal
-            function(){
-                alert("Algo ha ido mal");
-            });
+        // En vez de hacer que el controlador llame al servicio para que este haga la petición a la API
+        // hacemos que antes de llevar a la vista series me resuelva la promesa y la asigne a Series
+        $scope.series = $filter("orderBy")(Series.data.results, "original_name");
     }]);

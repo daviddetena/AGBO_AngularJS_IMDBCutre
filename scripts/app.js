@@ -21,13 +21,30 @@ angular
         // Segment => vista dinámica. Asignamos a esta vista de películas su controlador y su vista
         $routeSegmentProvider.segment("peliculas",{
             controller: "PeliculasCtrl",
-            templateUrl: "views/Peliculas.html"
+            templateUrl: "views/Peliculas.html",
+            resolve:{
+                // Lo que se incluye en resolve, previo a llevarte a esta vista, te lo resuelte
+                // y lo inyecta como dependencia
+                // En este caso, la vista de películas no tiene sentido si no hay una colección de
+                // películas
+                // Todos los resolve resuelven promesas
+                // En este caso, primero resolvemos la promesa (pedimos los datos) y luego navegamos
+                // en vez de navegar y pedir los datos, que provoca un leve lag
+                Peliculas:["ApiService",function(ApiService){
+                    return ApiService.obtenerDatos("movie/upcoming");
+                }]
+            }
         });
 
         // Segment => vista dinámica. Asignamos a esta vista de series su controlador y su vista
         $routeSegmentProvider.segment("series",{
             controller: "SeriesCtrl",
-            templateUrl: "views/Series.html"
+            templateUrl: "views/Series.html",
+            resolve:{
+                Series:["ApiService",function(ApiService){
+                    return ApiService.obtenerDatos("tv/airing_today");
+                }]
+            }
         });
 
         // Indicamos donde tiene que ir cuando le pasemos una ruta que no hemos definido arriba
