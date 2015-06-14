@@ -15,8 +15,9 @@ angular
     .config(["$routeSegmentProvider", "$routeProvider" , function($routeSegmentProvider,$routeProvider){
 
         // Configuramos el routing (asociamos un path a un controlador y una vista) mediante inyección de dependencias
-        $routeSegmentProvider.when("/peliculas","peliculas");   // cuando el link vaya a /peliculas cargo en div dinamico peliculas
-        $routeSegmentProvider.when("/series","series");         // cuando el link vaya a /series cargo en div dinamico series
+        $routeSegmentProvider.when("/peliculas","peliculas");           // cuando el link vaya a /peliculas cargo en div dinamico peliculas
+        $routeSegmentProvider.when("/series","series");                 // cuando el link vaya a /series cargo en div dinamico series
+        $routeSegmentProvider.when("/peliculas/:id/detalles","detalle_pelicula");       // : es para indicar que es dinámico
 
         // Segment => vista dinámica. Asignamos a esta vista de películas su controlador y su vista
         $routeSegmentProvider.segment("peliculas",{
@@ -55,6 +56,19 @@ angular
                 }]
             }
         });
+
+        // Segment para la vista en detalle de la película. $routeParams nos sirve para acceder
+        // a los parámetros de la url definida en el $routeSegmentProvider con :id
+        $routeSegmentProvider.segment("detalle_pelicula",{
+            controller: "DetallePelicula",
+            templateUrl: "views/DetallePelicula.html",
+            resolve:{
+                Pelicula: ["ApiService", "$routeParams", function(ApiService,$routeParams){
+                    return ApiService.obtenerDatos("movie/" + $routeParams.id);
+                }]
+            }
+        });
+
 
         // Indicamos donde tiene que ir cuando le pasemos una ruta que no hemos definido arriba
         $routeProvider.otherwise({

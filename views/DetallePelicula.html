@@ -1,0 +1,5 @@
+<article>
+    <h4>{{ ::pelicula.original_title }}</h4>
+    <p>{{ ::pelicula.release_date | date:"shortDate" }}</p>
+    <img ng-src="http://image.tmdb.org/t/p/w150/{{ ::pelicula.poster_path }}" alt="{{ ::pelicula.original_title }}" />
+</article>

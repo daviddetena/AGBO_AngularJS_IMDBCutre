@@ -10,9 +10,12 @@
         Aplicamos filtro (formato) a la fecha, con parámetros indicados por :
         Concateno filtros con |
         La salida de un filtro es la entrada del siguiente filtro. Así, la salida
-        de date:'shortDate' es la entrada del filtro personalizado nuestro 'estreno' -->
+        de date:'shortDate' es la entrada del filtro personalizado nuestro 'estreno'.
+        El nombre de la película tiene un enlace. Como ese enlace tiene una parte dinámica,
+        Angular utiliza una directiva ng-[atributoHtml] para poder obtener esa parte
+        dinámica y pintarla, y que no interfiera en el ciclo de vida del scope. -->
         <tr ng-repeat="pelicula in peliculas | orderBy:['release_date','original_title'] ">
-            <td>{{ ::pelicula.original_title }}</td>
+            <td><a ng-href="#/peliculas/{{ ::pelicula.id }}/detalles">{{ ::pelicula.original_title }}</a></td>
             <td>{{ ::pelicula.release_date | date:'shortDate' | estreno }}</td>
             <td><span class="badge">{{ ::pelicula.vote_average }}</span></td>
         </tr>
