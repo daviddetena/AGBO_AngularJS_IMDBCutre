@@ -1,13 +1,11 @@
-<h4>Series</h4>
+<h3>Series</h3>
 <table class="table table-striped">
     <tbody>
-    <!-- elementos es la variable que recibirá del controlador PeliculasCtrl.js, en este caso una colección.
-    Pintamos las cosas del $scope del controlador con {{}}. Añadimos :: a las variables para que no tenga
-    watch en ese caso, ya que es sólo para mostrarlo al usuario -->
-    <tr ng-repeat="serie in series">
-        <td>{{ ::serie.original_name }}</td>
-        <td>{{ ::serie.first_air_date }}</td>
-        <td><span class="badge">{{ ::serie.vote_average }}</span></td>
-    </tr>
+        <!-- elementos es la variable que recibirá del controlador PeliculasCtrl.js, en este caso una colección.
+        Pintamos las cosas del $scope del controlador con {{}}. Añadimos :: a las variables para que no tenga
+        watch en ese caso, ya que es sólo para mostrarlo al usuario
+        Usamos directiva personalizada
+        -->
+        <tr elemento-tabla ng-repeat="serie in series" model="serie"></tr>
     </tbody>
 </table>

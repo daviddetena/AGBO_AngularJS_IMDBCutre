@@ -1,9 +1,9 @@
-<h4>Películas</h4>
+<h3>Películas</h3>
 <table class="table table-striped">
     <tbody>
-    <!-- elementos es la variable que recibirá del controlador PeliculasCtrl.js, en este caso una colección.
-    Pintamos las cosas del $scope del controlador con {{}}. Añadimos :: a las variables para que no tenga
-    watch en ese caso, ya que es sólo para mostrarlo al usuario -->
+        <!-- elementos es la variable que recibirá del controlador PeliculasCtrl.js, en este caso una colección.
+        Pintamos las cosas del $scope del controlador con {{}}. Añadimos :: a las variables para que no tenga
+        watch en ese caso, ya que es sólo para mostrarlo al usuario -->
 
         <!-- Ordenamos por fecha de lanzamiento (orderBy: con guion delante del campo para
         orden descendente. Usar Array para ordenar por más de un campo.
@@ -13,11 +13,12 @@
         de date:'shortDate' es la entrada del filtro personalizado nuestro 'estreno'.
         El nombre de la película tiene un enlace. Como ese enlace tiene una parte dinámica,
         Angular utiliza una directiva ng-[atributoHtml] para poder obtener esa parte
-        dinámica y pintarla, y que no interfiera en el ciclo de vida del scope. -->
-        <tr ng-repeat="pelicula in peliculas | orderBy:['release_date','original_title'] ">
-            <td><a ng-href="#/peliculas/{{ ::pelicula.id }}/detalles">{{ ::pelicula.original_title }}</a></td>
-            <td>{{ ::pelicula.release_date | date:'shortDate' | estreno }}</td>
-            <td><span class="badge">{{ ::pelicula.vote_average }}</span></td>
+        dinámica y pintarla, y que no interfiera en el ciclo de vida del scope.
+
+        Directiva propia nuestra llamada "elemento-tabla" definida como atributo
+        -->
+        <tr elemento-tabla ng-repeat="pelicula in peliculas | orderBy:['release_date','original_title']"
+                           model="pelicula">
         </tr>
     </tbody>
 </table>

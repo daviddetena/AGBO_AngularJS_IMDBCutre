@@ -1,0 +1,9 @@
+<tr>
+    <!-- Ponemos || para que en función de si le llega una película o una serie recupere el original_title o
+    el original_name. Primero resuelve el OR (||) y luego el one-time-binding :: -->
+    <td><a ng-href="#/peliculas/{{ ::model.id }}/detalles">{{ ::(model.original_title || model.original_name) }}</a></td>
+    <!-- Directiva ngIf -->
+    <!-- Directiva ngShow, ngHide -->
+    <td>{{ ::(model.release_date || model.first_air_date) | date:'shortDate' | estreno }}</td>
+    <td><span class="badge">{{ ::model.vote_average }}</span></td>
+</tr>
